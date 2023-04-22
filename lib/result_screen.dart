@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:thimage/play_screen.dart';
+import 'package:thimage/config.dart';
 
 class ResultScreen extends StatefulWidget {
   final int numberOfPlayers;
   final Map<int, String?> playerImages;
 
-  ResultScreen(
+  const ResultScreen(
       {Key? key, required this.numberOfPlayers, required this.playerImages})
       : super(key: key);
 
@@ -14,7 +15,7 @@ class ResultScreen extends StatefulWidget {
 }
 
 class _ResultScreenState extends State<ResultScreen> {
-  bool _showCaption = false;
+  bool _isCaptionVisible = false;
   late List<Map<String, dynamic>> shuffledImages;
 
   @override
@@ -29,9 +30,9 @@ class _ResultScreenState extends State<ResultScreen> {
       ..shuffle();
   }
 
-  void _show_caption() {
+  void _showCaption() {
     setState(() {
-      _showCaption = true;
+      _isCaptionVisible = true;
     });
   }
 
@@ -39,49 +40,50 @@ class _ResultScreenState extends State<ResultScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Players'),
+        title: const Text('Players'),
       ),
       body: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 ElevatedButton(
-                  onPressed: _show_caption,
-                  child: Text('Show players'),
+                  onPressed: _showCaption,
+                  child: const Text('Show players'),
                 ),
-                Flexible(
+                SizedBox(
+                  width: Constants.IMG_WIDTH.toDouble() * 2 + 16,
+                  height: Constants.IMG_HEIGHT.toDouble() * 2 + 100,
                   child: GridView.count(
                     crossAxisCount: 2,
                     children: List.generate(widget.numberOfPlayers, (index) {
                       return shuffledImages[index]['image'] !=
                               null // widget.playerImages[index + 1] != null
-                          ? Stack(
+                          ? Card(
+                              child: Stack(
                               children: [
-                                if (_showCaption)
+                                Base64Image(
+                                  base64String: shuffledImages[index]['image'],
+                                ),
+                                if (_isCaptionVisible)
                                   Positioned(
                                     bottom: 0,
-                                    left: 8,
-                                    right: 96,
+                                    left: 0,
+                                    right: 0,
                                     child: Container(
-                                      padding: EdgeInsets.all(8.0),
-                                      color: Color.fromARGB(255, 71, 79, 192)
-                                          .withOpacity(0.5),
+                                      padding: const EdgeInsets.all(8.0),
+                                      color:
+                                          const Color.fromARGB(255, 71, 79, 192)
+                                              .withOpacity(0.5),
                                       child: Text(
                                         'Player ${shuffledImages[index]['index']}',
-                                        style: TextStyle(color: Colors.white),
+                                        style: const TextStyle(
+                                            color: Colors.white),
                                       ),
                                     ),
                                   ),
-                                Container(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Base64Image(
-                                    base64String: shuffledImages[index][
-                                        'image'], //widget.playerImages[index + 1]!,
-                                  ),
-                                ),
                               ],
-                            )
+                            ))
                           : Container();
                     }),
                   ),

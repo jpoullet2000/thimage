@@ -1,3 +1,5 @@
+import 'package:thimage/config.dart';
+
 class StableDiffusionModel {
   final String prompt;
   Map<String, dynamic> bodyData;
@@ -25,8 +27,8 @@ class StableDiffusionModel {
           "n_iter": 1,
           "steps": 10,
           "cfg_scale": 7,
-          "width": 512,
-          "height": 512,
+          "width": Constants.IMG_WIDTH,
+          "height": Constants.IMG_HEIGHT,
           "restore_faces": false,
           "tiling": false,
           "do_not_save_samples": false,
