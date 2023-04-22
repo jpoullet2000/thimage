@@ -1,6 +1,20 @@
 # thimage
 
-A new Flutter project.
+Flutter game.
+
+Each player creates his/her image with his/her prompt while keeping it hidden from the other players.
+Once all images are created (1 image per player), the players vote for the one they prefer or try to retrieve who has created which image.
+
+This flutter app uses stable diffusion to generate the images.
+
+![](assets/images/screen_generate_image.png)
+
+![](assets/images/screen_result.png)
+
+After pressing the "Show players" button.
+![](assets/images/screen_result_with_caption.png)
+
+Enjoy ;)
 
 ## Getting Started
 
