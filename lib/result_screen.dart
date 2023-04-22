@@ -15,6 +15,19 @@ class ResultScreen extends StatefulWidget {
 
 class _ResultScreenState extends State<ResultScreen> {
   bool _showCaption = false;
+  late List<Map<String, dynamic>> shuffledImages;
+
+  @override
+  void initState() {
+    super.initState();
+    shuffledImages = List.generate(widget.playerImages.length, (index) {
+      return {
+        'index': index + 1,
+        'image': widget.playerImages[index + 1],
+      };
+    })
+      ..shuffle();
+  }
 
   void _show_caption() {
     setState(() {
@@ -41,20 +54,21 @@ class _ResultScreenState extends State<ResultScreen> {
                   child: GridView.count(
                     crossAxisCount: 2,
                     children: List.generate(widget.numberOfPlayers, (index) {
-                      return widget.playerImages[index + 1] != null
+                      return shuffledImages[index]['image'] !=
+                              null // widget.playerImages[index + 1] != null
                           ? Stack(
                               children: [
                                 if (_showCaption)
                                   Positioned(
                                     bottom: 0,
-                                    left: 0,
-                                    right: 0,
+                                    left: 8,
+                                    right: 96,
                                     child: Container(
                                       padding: EdgeInsets.all(8.0),
                                       color: Color.fromARGB(255, 71, 79, 192)
                                           .withOpacity(0.5),
                                       child: Text(
-                                        'Player ${index + 1}',
+                                        'Player ${shuffledImages[index]['index']}',
                                         style: TextStyle(color: Colors.white),
                                       ),
                                     ),
@@ -62,8 +76,8 @@ class _ResultScreenState extends State<ResultScreen> {
                                 Container(
                                   padding: EdgeInsets.all(8.0),
                                   child: Base64Image(
-                                    base64String:
-                                        widget.playerImages[index + 1]!,
+                                    base64String: shuffledImages[index][
+                                        'image'], //widget.playerImages[index + 1]!,
                                   ),
                                 ),
                               ],
