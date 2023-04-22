@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:thimage/config.dart';
 import 'package:thimage/result_screen.dart';
+import 'package:thimage/models.dart';
 
 class PlayScreen extends StatefulWidget {
   final int numberOfPlayers;
@@ -53,49 +54,9 @@ class _PlayScreenState extends State<PlayScreen> {
     // Replace with your actual API endpoint
     //const url = 'http://127.0.0.1:7860/sdapi/v1/txt2img';
     // API from 'http://127.0.0.1:7860/docs'
-    final Map<String, dynamic> bodyData = {
-      "enable_hr": false,
-      "denoising_strength": 0,
-      "firstphase_width": 0,
-      "firstphase_height": 0,
-      "hr_scale": 2,
-      "hr_upscaler": "string",
-      "hr_second_pass_steps": 0,
-      "hr_resize_x": 0,
-      "hr_resize_y": 0,
-      "prompt": prompt,
-      "styles": ["string"],
-      "seed": -1,
-      "subseed": -1,
-      "subseed_strength": 0,
-      "seed_resize_from_h": -1,
-      "seed_resize_from_w": -1,
-      "sampler_name": "",
-      "batch_size": 1,
-      "n_iter": 1,
-      "steps": 5,
-      "cfg_scale": 7,
-      "width": 512,
-      "height": 512,
-      "restore_faces": false,
-      "tiling": false,
-      "do_not_save_samples": false,
-      "do_not_save_grid": false,
-      "negative_prompt": "not a cat",
-      "eta": 0,
-      "s_churn": 0,
-      "s_tmax": 0,
-      "s_tmin": 0,
-      "s_noise": 1,
-      "override_settings": {},
-      "override_settings_restore_afterwards": true,
-      "script_args": [],
-      "sampler_index": "Euler",
-      "script_name": "",
-      "send_images": true,
-      "save_images": false,
-      "alwayson_scripts": {}
-    };
+    Map<String, dynamic> bodyData =
+        StableDiffusionModel(prompt: prompt).bodyData;
+
     try {
       final response = await http.post(Uri.parse(Constants.TXT2IMG_API_URL),
           headers: {
