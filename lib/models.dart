@@ -25,7 +25,7 @@ class StableDiffusionModel {
           "sampler_name": "",
           "batch_size": 1,
           "n_iter": 1,
-          "steps": 10,
+          "steps": 40,
           "cfg_scale": 7,
           "width": Constants.IMG_WIDTH,
           "height": Constants.IMG_HEIGHT,
